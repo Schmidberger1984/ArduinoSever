@@ -1,6 +1,6 @@
-package com.example.arduinoserver;
+package ownClass;
 
-public class ArduinoGet extends Ardunio{
+public class ArduinoGet extends Ardunio {
     int Port =0;
     int Pin=0;
     int APin =0;

@@ -3,6 +3,8 @@ package com.example.arduinoserver;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import ownClass.ArduinoSet;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Iterator;

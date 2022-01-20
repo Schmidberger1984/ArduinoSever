@@ -1,4 +1,4 @@
-package com.example.arduinoserver;
+package ownClass;
 
 public class Ardunio {
     public int ID=0;

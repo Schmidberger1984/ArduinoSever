@@ -2,7 +2,6 @@ package Database;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class MySQL {
     static Connection connection;
@@ -21,8 +20,8 @@ public class MySQL {
             System.out.println(e);
         }
     }
-    public static List select(String cmd, String cell){
-        List data=new ArrayList();
+    public static ArrayList select(String cmd, String cell){
+        ArrayList data=new ArrayList();
         try {
             Statement statement = connection.createStatement();
              rs = statement.executeQuery(cmd);

@@ -1,4 +1,4 @@
-package com.example.arduinoserver;
+package ownClass;
 
 import com.google.gson.Gson;
 
