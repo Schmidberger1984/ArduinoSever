@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class MySQL {
     static Connection connection;
     static ResultSet rs=null;
+    static Statement statement=null;
 
     public static void connect(){
         try {
@@ -23,7 +24,7 @@ public class MySQL {
     public static ArrayList select(String cmd, String cell){
         ArrayList data=new ArrayList();
         try {
-            Statement statement = connection.createStatement();
+             statement = connection.createStatement();
              rs = statement.executeQuery(cmd);
             while (rs.next()) {
                 data.add(rs.getString(cell));
@@ -33,6 +34,14 @@ public class MySQL {
 
         }
         return null;
+    }
+    public static int insert(String cmd){
+        try {
+            return statement.executeUpdate(cmd);
+        }catch (Exception e) {
+
+        }
+        return -1;
     }
 
 

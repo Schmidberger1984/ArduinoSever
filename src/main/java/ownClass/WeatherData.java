@@ -1,7 +1,5 @@
 package ownClass;
 
-
-
 public class WeatherData {
     String temperature;
     String humidity;

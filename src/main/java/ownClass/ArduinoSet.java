@@ -19,6 +19,8 @@ public class ArduinoSet extends Ardunio {
         Gson gson=new Gson();
         try {
             ArduinoSet input = gson.fromJson(setval, ArduinoSet.class);
+            SocketClient ardunio=new SocketClient("10.0.0.12");
+            ardunio.sendData("df");
             return input.ID;
         } catch (Exception e){
             System.out.println(e);

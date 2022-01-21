@@ -1,9 +1,11 @@
 package com.example.arduinoserver;
 
+import com.google.gson.Gson;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import ownClass.ArduinoSet;
+import ownClass.SocketClient;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -26,6 +28,7 @@ public class GPIO extends HttpServlet {
                     String[] setval= values.getValue();
                     out.println(setval[0]);
                     out.println(ArduinoSet.send(setval[0]));
+                    
                     break;
                 case "Read":
                     String[] setval2= values.getValue();

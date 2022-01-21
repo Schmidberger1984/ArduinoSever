@@ -36,7 +36,8 @@ public class Weather extends HttpServlet {
                     System.out.println("sdfaf");
                     String[] setval= values.getValue();
                     LocalDate searchDate= LocalDate.now();
-                    if (setval.length!=0) out.println(statement2.getDayWeather(setval[0]));
+                    out.println(searchDate);
+                    if (!setval[0].equals("")) out.println(statement2.getDayWeather(setval[0]));
                     else out.println(statement2.getDayWeather(String.valueOf(searchDate)));
                     break;
             }

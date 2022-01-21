@@ -46,5 +46,8 @@ public class Statements {
         return sendData;
     }
 
+    public void insertWeatherData(float temperature, float humidity){
+        int result=MySQL.insert("INSERT INTO weatherdata (Temperature, Humidity) VALUES ('"+temperature+"','"+humidity+"')");
+    }
 
 }
