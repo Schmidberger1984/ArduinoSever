@@ -1,15 +1,19 @@
 #include <WiFi.h>
-#include <ArduinoJson.h>
+#include <Arduino_JSON.h>
 
-char json[100];
+
+char json[40];
+//char  json[]="{\"id\":5,\"port\":0,\"Pin\":7,\"setValue\":true}";
 int count=0;
+int run1=0;
 const char* ssid = "PBS-EE5C60";
 const char* password =  "sw5610op";
+
  
 WiFiServer wifiServer(90);
  
 void setup() {
-  StaticJsonDocument<200> doc;
+  pinMode(2,OUTPUT);
   Serial.begin(115200);
  
   delay(1000);
@@ -25,6 +29,7 @@ void setup() {
   Serial.println(WiFi.localIP());
  
   wifiServer.begin();
+
 }
  
 void loop() {
@@ -37,15 +42,19 @@ void loop() {
  
       while (client.available()>0) {
         char c = client.read();
-        json[count]=c;
         client.write(c);
+        json[count]=c;
         Serial.print(c);
-        if (c=='e') Serial.println("es geht");
-      }
- 
-      delay(10);
+        count++;
+        }
     }
- 
+    JSONVar myObject = JSON.parse(json);
+    int pin=(int) myObject["Pin"];
+    bool value=(bool) myObject["setValue"];
+    Serial.println(pin);
+    Serial.println(value);
+    digitalWrite(pin,value);
     client.stop();
+    count=0;
   }
 }
