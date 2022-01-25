@@ -8,7 +8,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Map;
 
-import static ownClass.Ardunio.ArdunioList;
 
 public class Test {
     public static void main(String[] args) {
@@ -40,8 +39,12 @@ public class Test {
         System.out.println(test1);
         String ha=String.valueOf(4.5);
         System.out.println(ha);*/
-        Map<Integer,String> temp=Ardunio.getArdunioList();
-        System.out.println(temp.get(1));
-        ArduinoSet.isJson("{\"ID\":5,\"Pin\":2,\"setValue\":true}");
+        System.out.println(ArduinoSet.isJson("{\"ID\":5,\"Pin\":7,\"setValue\":true}"));
+     //   Ardunio.getArdunioList();
+        System.out.println(Ardunio.checkArduino());
+        Statements temp=new Statements();
+        System.out.println(temp.getArdunioList());
+
+
     }
 }
