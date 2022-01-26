@@ -39,7 +39,7 @@ public class Test {
         System.out.println(test1);
         String ha=String.valueOf(4.5);
         System.out.println(ha);*/
-        System.out.println(ArduinoSet.isJson("{\"ID\":5,\"Pin\":7,\"setValue\":true}"));
+        System.out.println(ArduinoSet.isJson("{\"ID\":5,\"Pin\":2,\"setValue\":false}"));
      //   Ardunio.getArdunioList();
         System.out.println(Ardunio.checkArduino());
         Statements temp=new Statements();

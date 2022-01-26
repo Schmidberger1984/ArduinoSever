@@ -22,6 +22,8 @@ public class ArduinoSet extends Ardunio {
         try {
             Gson gson=new Gson();
             ArduinoSet test = gson.fromJson(setval,ArduinoSet.class);
+
+            System.out.println(test.ID);
             return true;
         } catch (Exception e) {
             return false;

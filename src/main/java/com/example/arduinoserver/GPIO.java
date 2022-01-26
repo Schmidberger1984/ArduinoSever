@@ -8,7 +8,6 @@ import jakarta.servlet.annotation.*;
 import ownClass.ArduinoGet;
 import ownClass.ArduinoSet;
 import ownClass.Ardunio;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -37,15 +36,16 @@ public class GPIO extends HttpServlet {
                     String[] setval= values.getValue();
                     //out.println(setval[0]);
                     if (ArduinoSet.isJson(setval[0])) {
+                        Gson gson2= new Gson();
+                        Ardunio postobj=gson2.fromJson(setval[0],Ardunio.class);
                         for (int i=0;i<onlineList.size();i++){
                             Gson gson= new Gson();
-                            Gson gson2= new Gson();
-                            Ardunio test=gson.fromJson((String) onlineList.get(i),Ardunio.class);
-                            Ardunio test2=gson.fromJson(setval[0],Ardunio.class);
-                            if (test.ID==test2.ID) out.println("sdaf");
+                            Ardunio onlineListobj=gson.fromJson((String) onlineList.get(i),Ardunio.class);
+                            if (onlineListobj.ID==postobj.ID && onlineListobj.online==true){
+                                out.println(ArduinoSet.send(setval[0]));
+                            }
+                            if (onlineListobj.ID==postobj.ID && onlineListobj.online==false) out.println("Arduino is offline");
                         }
-                        out.println(ArduinoSet.send(setval[0]));
-
                     }else {
                         out.println("no Json received");
                     }
