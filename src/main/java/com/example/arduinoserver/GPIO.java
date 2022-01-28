@@ -7,7 +7,7 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import ownClass.ArduinoGet;
 import ownClass.ArduinoSet;
-import ownClass.Ardunio;
+import ownClass.Arduino;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class GPIO extends HttpServlet {
 
     @Override
     public void init() {
-        onlineList =Ardunio.checkArduino();
+        onlineList = Arduino.checkArduino();
     }
 
     @Override
@@ -37,10 +37,10 @@ public class GPIO extends HttpServlet {
                     //out.println(setval[0]);
                     if (ArduinoSet.isJson(setval[0])) {
                         Gson gson2= new Gson();
-                        Ardunio postobj=gson2.fromJson(setval[0],Ardunio.class);
+                        Arduino postobj=gson2.fromJson(setval[0], Arduino.class);
                         for (int i=0;i<onlineList.size();i++){
                             Gson gson= new Gson();
-                            Ardunio onlineListobj=gson.fromJson((String) onlineList.get(i),Ardunio.class);
+                            Arduino onlineListobj=gson.fromJson((String) onlineList.get(i), Arduino.class);
                             if (onlineListobj.ID==postobj.ID && onlineListobj.online==true){
                                 out.println(ArduinoSet.send(setval[0]));
                             }

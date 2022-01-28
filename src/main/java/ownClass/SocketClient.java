@@ -20,24 +20,22 @@ public class SocketClient {
             String intext="";
             InetAddress host = InetAddress.getByName(ipAddress);
             Socket socket = new Socket();
-            SocketAddress socketAddress = new InetSocketAddress(host.getHostName(),90);
+            SocketAddress socketAddress = new InetSocketAddress(host.getHostName(),5000);
             socket.connect(socketAddress,1000);
             socket.setSoTimeout(1000);
             if (socket.isConnected()) {
                 PrintStream out = new PrintStream(socket.getOutputStream());
                 out.println(data);
+                Thread.sleep(1000);
                 DataInputStream in = new DataInputStream(socket.getInputStream());
                 intext = in.readLine();
                 in.close();
                 out.close();
                 socket.close();
             }
-            String response = null;
-            if (data.equals(intext)) {
-            response = "Arduino has a json received";}
-            return response;
+           return intext;
         } catch ( Exception e){
-            return  "Ardunio has nothing received ";
+            return  "";
         }
     }
 }

@@ -1,11 +1,11 @@
 package Database;
 
 import com.google.gson.Gson;
+import ownClass.Arduino;
 import ownClass.WeatherData;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 
 public class Statements {
@@ -46,19 +46,20 @@ public class Statements {
         return sendData;
     }
 
-    public int insertWeatherData(float temperature, float humidity){
+    public int insertWeatherData(double temperature, double humidity){
         return MySQL.insert("INSERT INTO weatherdata (Temperature, Humidity) VALUES ('"+temperature+"','"+humidity+"')");
     }
 
-    public HashMap<Integer,String> getArdunioList(){
+    public ArrayList<Arduino> getArdunioList(){
         MySQL.connect();
         ArrayList<String> id=MySQL.select("SELECT * FROM arduinolist", "ID");
         ArrayList<String> ipAdd=MySQL.select("SELECT * FROM arduinolist", "ipADD");
-        HashMap<Integer,String> temp=new HashMap<>();
+        ArrayList<String> Port=MySQL.select("SELECT * FROM arduinolist", "Port");
+        ArrayList<Arduino> data=new ArrayList();
         for(int i=0;i<id.size();i++){
-            temp.put( Integer.parseInt(id.get(i)),ipAdd.get(i));
+           data.add(new Arduino(Integer.parseInt(id.get(i)),ipAdd.get(i),Integer.parseInt(Port.get(i)),false));
         }
-        return temp;
+        return data;
     }
 
 }

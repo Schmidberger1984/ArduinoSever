@@ -38,12 +38,16 @@ public class Test {
         LocalDate test1= LocalDate.now();
         System.out.println(test1);
         String ha=String.valueOf(4.5);
-        System.out.println(ha);*/
+        System.out.println(ha);
         System.out.println(ArduinoSet.isJson("{\"ID\":5,\"Pin\":2,\"setValue\":false}"));
      //   Ardunio.getArdunioList();
-        System.out.println(Ardunio.checkArduino());
+
         Statements temp=new Statements();
         System.out.println(temp.getArdunioList());
+        System.out.println(ArduinoGet.Get("{\"ID\":1,\"APin\":34}"));*/
+        Convert test=new Convert(Integer.parseInt("512"));
+        System.out.println(test.toGrad());
+        System.out.println(Arduino.checkArduino());
 
 
     }
