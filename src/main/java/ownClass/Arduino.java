@@ -33,11 +33,11 @@ public class Arduino {
         ArrayList<Arduino> data=sql.getArdunioList();
         Iterator<Arduino> iter=data.listIterator();
         try {
-           Arduino current= (Arduino) iter.next();
+           Arduino current=  iter.next();
             while (iter.hasNext()) {
-                InetAddress inet = InetAddress.getByName("10.0.0.12");
-                if (!inet.isReachable(1000)) current.online = true;
-                else System.out.println("dsfas");
+                InetAddress inet = InetAddress.getByName(current.ipAdd);
+                if (inet.isReachable(500)) current.online = true;
+                else System.out.println("ofline");
                 current=iter.next();
             }
         } catch (IOException e) {

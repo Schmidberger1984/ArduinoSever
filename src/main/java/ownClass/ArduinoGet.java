@@ -17,14 +17,18 @@ public class ArduinoGet extends Arduino {
         this.Value=Value;
     }
 
-    public static String Get(String setval){
-        SocketClient ardunio=new SocketClient("10.0.0.9");
+    public static String Get(String setval,Arduino setting){
+        SocketClient ardunio=new SocketClient(setting.ipAdd,setting.Port);
         String temp =ardunio.sendData(setval);
         Gson gson=new Gson();
         ArduinoGet data=gson.fromJson(temp,ArduinoGet.class);
         Convert convert = new Convert( data.Value);
         Statements statement= new Statements();
-        statement.insertWeatherData(convert.toGrad(),convert.toHumidity());
+        try {
+            statement.insertWeatherData(convert.toGrad(), convert.toHumidity(), setting.ID);
+        }catch ( Exception e) {
+            System.out.println(e);
+        }
         if (!setval.contains(temp.substring(0,setval.length()-1))) return "Ardunio has not Json received";
         return "Ardunio has Json received";
     }

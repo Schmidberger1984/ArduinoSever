@@ -11,7 +11,7 @@ import java.io.IOException;
 public class RecordData extends HttpServlet {
     @Override
     public void init(){
-        SocketClient socket=new SocketClient("10.0.0.12");
+        SocketClient socket=new SocketClient("10.0.0.12",5000);
         while (true) {
             socket.sendData("{\"ID\":1,\"APIN\":22}");
             try {

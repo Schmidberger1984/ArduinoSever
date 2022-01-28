@@ -14,8 +14,8 @@ public class ArduinoSet extends Arduino {
         this.setValue = setValue;
     }
 
-    public static String send(String setval){
-        SocketClient ardunio=new SocketClient("10.0.0.9");
+    public static String send(String setval,Arduino setting){
+        SocketClient ardunio=new SocketClient(setting.ipAdd,setting.Port);
         String temp =ardunio.sendData(setval);
         if (!setval.equals(temp)) return "Ardunio has not Json received";
         return "Ardunio has Json received";
@@ -24,7 +24,6 @@ public class ArduinoSet extends Arduino {
         try {
             Gson gson=new Gson();
             ArduinoSet test = gson.fromJson(setval,ArduinoSet.class);
-
             System.out.println(test.ID);
             return true;
         } catch (Exception e) {

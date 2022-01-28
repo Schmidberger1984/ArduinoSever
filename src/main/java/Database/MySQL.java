@@ -37,11 +37,12 @@ public class MySQL {
     }
     public static int insert(String cmd){
         try {
+            Statement statement = connection.createStatement();
             return statement.executeUpdate(cmd);
         }catch (Exception e) {
-
+            System.out.println(e);
         }
-        return -1;
+        return 0;
     }
 
 

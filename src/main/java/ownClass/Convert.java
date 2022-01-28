@@ -12,22 +12,26 @@ public class Convert {
     }
 
     public double toGrad() {
-        double calculate;
-        calculate=data*(5.0/1023.0);  //voltage from the seonsor  --- 5V ref and 10 Bit AD-Converter
-        calculate=calculate/((5- calculate)/1000);  // calculate the Resistance of the Sensor --- Pullupresistor with 1k
-        int posRes;
-        for (posRes=0; posRes<resistance.length; posRes++){
-            if (resistance[posRes]>calculate) break;
+        try {
+            double calculate;
+            calculate = data * (5.0 / 4096.0);  //voltage from the seonsor  --- 5V ref and 10 Bit AD-Converter
+            calculate = calculate / ((5 - calculate) / 1000);  // calculate the Resistance of the Sensor --- Pullupresistor with 1k
+            int posRes;
+            for (posRes = 0; posRes < resistance.length; posRes++) {
+                if (resistance[posRes] > calculate) break;
+            }
+            double diffRes;
+            double diffGrad;
+            double diffCalc;
+            double mul;
+            diffRes = resistance[posRes] - resistance[posRes - 1];
+            diffGrad = grad[posRes] - grad[posRes - 1];
+            diffCalc = calculate - resistance[posRes - 1];
+            mul = diffRes / diffCalc;
+            return grad[posRes - 1] + diffGrad / mul;
+        }catch ( Exception e) {
+            return -99999.0;
         }
-        double diffRes;
-        double diffGrad;
-        double diffCalc;
-        double mul;
-        diffRes=resistance[posRes]-resistance[posRes-1];
-        diffGrad=grad[posRes]-grad[posRes-1];
-        diffCalc=calculate-resistance[posRes-1];
-        mul=diffRes/diffCalc;
-        return grad[posRes-1] +diffGrad/mul;
     }
     public double toHumidity() {
         return 33.3;

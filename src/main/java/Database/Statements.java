@@ -46,8 +46,9 @@ public class Statements {
         return sendData;
     }
 
-    public int insertWeatherData(double temperature, double humidity){
-        return MySQL.insert("INSERT INTO weatherdata (Temperature, Humidity) VALUES ('"+temperature+"','"+humidity+"')");
+    public int insertWeatherData(double temperature, double humidity, int ArduinoId){
+        MySQL.connect();
+        return MySQL.insert("INSERT INTO weatherdata (Temperature, Humidity,ArduinoID) VALUES ('"+temperature+"','"+humidity+"','"+ArduinoId+"')");
     }
 
     public ArrayList<Arduino> getArdunioList(){
@@ -59,6 +60,7 @@ public class Statements {
         for(int i=0;i<id.size();i++){
            data.add(new Arduino(Integer.parseInt(id.get(i)),ipAdd.get(i),Integer.parseInt(Port.get(i)),false));
         }
+        MySQL.close();
         return data;
     }
 

@@ -32,7 +32,6 @@ void loop() {
     while (client.connected()) {
       while (client.available()>0) {
         char c = client.read();
-         client.write(c);
          json[count]=c;
          if (c=='}'){
                       JSONVar myObject = JSON.parse(json);
@@ -47,9 +46,11 @@ void loop() {
                         
                       }
                       if (myObject.hasOwnProperty("APin")){
+                        int ID=(int) myObject["ID"];
+                        int APin=(int) myObject["APin"];
                         int value=analogRead((int) myObject["APin"]);
-                        Serial.println("{\"ID\":1,\"APin\":2}");
-                        String test="{\"ID\":1,\"APin\":2,\"Value\":"+String(value)+"}";
+                        Serial.println("{\"ID\":"+String(ID)+",\"APin\":"+String(APin)+"}");
+                        String test="{\"ID\":"+String(ID)+",\"APin\":"+String(APin)+",\"Value\":"+String(value)+"}";
                         size=test.length();
                         test.toCharArray(data,40);
                         for (int i=0;i<size;i++){

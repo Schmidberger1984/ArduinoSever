@@ -16,7 +16,7 @@ import java.util.Map;
 
 @WebServlet(name = "GPIO", value = "/GPIO")
 public class GPIO extends HttpServlet {
-    ArrayList onlineList;
+    ArrayList<Arduino> onlineList;
 
     @Override
     public void init() {
@@ -39,12 +39,10 @@ public class GPIO extends HttpServlet {
                         Gson gson2= new Gson();
                         Arduino postobj=gson2.fromJson(setval[0], Arduino.class);
                         for (int i=0;i<onlineList.size();i++){
-                            Gson gson= new Gson();
-                            Arduino onlineListobj=gson.fromJson((String) onlineList.get(i), Arduino.class);
-                            if (onlineListobj.ID==postobj.ID && onlineListobj.online==true){
-                                out.println(ArduinoSet.send(setval[0]));
+                            if (onlineList.get(i).ID==postobj.ID && onlineList.get(i).online==true){
+                                out.println(ArduinoSet.send(setval[0],onlineList.get(i)));
                             }
-                            if (onlineListobj.ID==postobj.ID && onlineListobj.online==false) out.println("Arduino is offline");
+                            if (onlineList.get(i).ID==postobj.ID && onlineList.get(i).online==false) out.println("Arduino is offline");
                         }
                     }else {
                         out.println("no Json received");
@@ -52,9 +50,14 @@ public class GPIO extends HttpServlet {
                     break;
                 case "Read":
                     String[] getval= values.getValue();
-                    //out.println(setval[0]);
+                    Gson gson2= new Gson();
+                    Arduino postobj=gson2.fromJson(getval[0], Arduino.class);
                     if (ArduinoSet.isJson(getval[0])) {
-                        out.println(ArduinoGet.Get(getval[0]));
+                        for (int i=0;i<onlineList.size();i++) {
+                            if (onlineList.get(i).ID == postobj.ID && onlineList.get(i).online == true) {
+                                out.println(ArduinoGet.Get(getval[0], onlineList.get(i)));
+                            }
+                        }
                     }else {
                         out.println("no Json received");
                     }
