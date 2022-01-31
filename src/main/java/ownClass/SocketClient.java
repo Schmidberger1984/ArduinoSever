@@ -28,7 +28,6 @@ public class SocketClient {
             if (socket.isConnected()) {
                 PrintStream out = new PrintStream(socket.getOutputStream());
                 out.println(data);
-                Thread.sleep(1000);
                 DataInputStream in = new DataInputStream(socket.getInputStream());
                 intext = in.readLine();
                 in.close();

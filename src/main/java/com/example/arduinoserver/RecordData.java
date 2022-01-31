@@ -3,7 +3,7 @@ package com.example.arduinoserver;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
-import ownClass.SocketClient;
+import ownClass.Threadnew;
 
 import java.io.IOException;
 
@@ -11,13 +11,12 @@ import java.io.IOException;
 public class RecordData extends HttpServlet {
     @Override
     public void init(){
-        SocketClient socket=new SocketClient("10.0.0.12",5000);
-        while (true) {
-            socket.sendData("{\"ID\":1,\"APIN\":22}");
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-            }
-        }
+     Threadnew getdataThread = new Threadnew();
+        getdataThread.start();
+
+    }
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
     }
 }

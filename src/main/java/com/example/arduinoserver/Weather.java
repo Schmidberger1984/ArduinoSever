@@ -1,18 +1,14 @@
 package com.example.arduinoserver;
 
-import Database.MySQL;
 import Database.Statements;
+import com.google.gson.Gson;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
-
-import javax.xml.transform.Source;
+import ownClass.WeatherData;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 @WebServlet(name = "Weather", value = "/Weather")
@@ -21,32 +17,28 @@ public class Weather extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-        out.println("test");
         Map GetMap=request.getParameterMap();
         Iterator<Map.Entry<String, String[]>> itr= GetMap.entrySet().iterator();
         while (itr.hasNext()){
             Map.Entry<String, String[]> values= itr.next();
             switch (values.getKey()){
                 case "currentData":
-                    Statements statement= new Statements();
-                    out.println(statement.getcurrentWeather());
-                    break;
-                case "currentHumidity":
-                    Statements statement2= new Statements();
-                    System.out.println("sdfaf");
                     String[] setval= values.getValue();
-                    LocalDate searchDate= LocalDate.now();
-                    out.println(searchDate);
-                    if (!setval[0].equals("")) out.println(statement2.getDayWeather(setval[0]));
-                    else out.println(statement2.getDayWeather(String.valueOf(searchDate)));
+                    Statements statement= new Statements();
+                    out.println(statement.getcurrentWeather(setval[0]));
+                    break;
+                case "dayData":
+                    Statements statement2= new Statements();
+                    String[] setval1= values.getValue();
+                    Gson gson = new Gson();
+                    WeatherData data =gson.fromJson(setval1[0],WeatherData.class);
+                    if (data==null) out.println("No Json found");
+                    else {
+                        out.println(statement2.getDayWeather(data.date,data.ID));
+                    }
                     break;
             }
         }
-        MySQL.connect();
-        ArrayList test=MySQL.select("SELECT * FROM weatherdata","Temperature");
-        out.println(test.size());
-        MySQL.close();
-
     }
 
     @Override

@@ -1,11 +1,13 @@
 package ownClass;
 
 
+import java.util.Random;
+
 public class Convert {
 
     double data;
-    int[] resistance={485,510,562,617,677,740,807,877,951,990,1029,1111,1196,1286,1376,1475,1575,1679,1786,1896,1950,2003,2103,2189};
-    int[] grad={-55,-50,-40,-30,-20,-10,0,10,20,25,30,40,50,60,70,80,90,100,110,120,125,130,140,150};
+    int[] resistance={510,562,617,674,736,802,872,946,985,1024,1106,1190,1280,1373,1469,1570,1674,1782,1894,2010,2096,2201};
+    int[] grad={-50,-40,-30,-20,-10,0,10,20,25,30,40,50,60,70,80,90,100,110,120,130,140,150};
 
     public Convert(int data) {
         this.data = data;
@@ -34,6 +36,8 @@ public class Convert {
         }
     }
     public double toHumidity() {
-        return 33.3;
+        Random rand=new Random();
+        int temp=rand.nextInt(50);
+        return temp+20;
     }
 }
