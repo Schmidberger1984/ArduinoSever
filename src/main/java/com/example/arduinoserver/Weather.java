@@ -34,7 +34,11 @@ public class Weather extends HttpServlet {
                     WeatherData data =gson.fromJson(setval1[0],WeatherData.class);
                     if (data==null) out.println("No Json found");
                     else {
-                        out.println(statement2.getDayWeather(data.date,data.ID));
+                        try {
+                            out.println(statement2.getDayWeather(data.date, data.ID));
+                        }catch (Exception e){
+                            System.out.println(e);
+                        }
                     }
                     break;
             }

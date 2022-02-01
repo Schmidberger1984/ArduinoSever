@@ -7,7 +7,7 @@ public class WeatherData {
     public String time;
     public int ID;
 
-    public WeatherData(String temperature, String humidity, String date, String time, String ID) {
+    public WeatherData(String temperature, String humidity, String date,String time,String ID) {
         this.temperature = temperature;
         this.humidity = humidity;
         this.date = date;
@@ -15,4 +15,5 @@ public class WeatherData {
         this.ID =Integer.valueOf(ID);;
         ;
     }
+
 }

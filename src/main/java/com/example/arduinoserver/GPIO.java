@@ -16,11 +16,14 @@ import java.util.Map;
 
 @WebServlet(name = "GPIO", value = "/GPIO")
 public class GPIO extends HttpServlet {
-    ArrayList<Arduino> onlineList;
+    public ArrayList<Arduino> onlineList;
+    String onlineJson;
 
     @Override
     public void init() {
         onlineList = Arduino.checkArduino();
+        Gson gson2= new Gson();
+        onlineJson=gson2.toJson(onlineList);
     }
 
     @Override
@@ -63,11 +66,10 @@ public class GPIO extends HttpServlet {
                     }
                     break;
                 case "Status":
-                    out.println(onlineList);
+                    out.println(onlineJson);
                     break;
             }
         }
-
     }
 
     @Override

@@ -1,8 +1,6 @@
 package ownClass;
 
 import Database.Statements;
-import com.google.gson.Gson;
-
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.ArrayList;
@@ -14,10 +12,10 @@ public class Arduino {
     public String ipAdd="";
     public  int Port=0;
     public boolean online=false;
+    public ArrayList<Arduino> ArduinoList;
 
     public Arduino(int ID) {
         this.ID = ID;
-
     }
 
     public Arduino(int ID, String ipAdd, int Port, boolean online) {

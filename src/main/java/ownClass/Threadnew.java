@@ -4,6 +4,7 @@ import Database.Statements;
 import com.google.gson.Gson;
 
 public class Threadnew extends Thread{
+
     public void run(){
         SocketClient ardunio=new SocketClient("10.0.0.12",5000);
         while(true){

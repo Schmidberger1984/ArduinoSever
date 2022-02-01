@@ -18,7 +18,7 @@ public class Statements {
         ArrayList<String> ArduinoID=MySQL.select("SELECT * FROM weatherdata  WHERE arduinoID="+ArduinoId,"ArduinoID");
         Gson gson=new Gson();
         ArrayList<WeatherData> arraydata=new ArrayList<>();
-        arraydata.add(new WeatherData(LastEntry(temp), LastEntry(humidity), LastEntry(date), LastEntry(time), ArduinoID.get(ArduinoID.size() - 1)));
+        arraydata.add(new WeatherData(LastEntry(temp),LastEntry(humidity),LastEntry(date),LastEntry(time),LastEntry(ArduinoID)));
         String sendData=gson.toJson(arraydata);
         MySQL.close();
         return sendData;
@@ -36,16 +36,16 @@ public class Statements {
             return String.valueOf(e);
         }
         MySQL.connect();
-        ArrayList date=MySQL.select("SELECT * FROM weatherdata WHERE Date='"+searchDate+"' and ArduinoID="+ArduinoID,"Date");
-        ArrayList time=MySQL.select("SELECT * FROM weatherdata WHERE Date='"+searchDate+"' and ArduinoID="+ArduinoID,"Time");
-        ArrayList temp=MySQL.select("SELECT * FROM weatherdata WHERE Date='"+searchDate+"' and ArduinoID="+ArduinoID,"Temperature");
-        ArrayList humidity=MySQL.select("SELECT * FROM weatherdata WHERE Date='"+searchDate+"' and ArduinoID="+ArduinoID,"Humidity");
-        ArrayList<String> ArduinoId=MySQL.select("SELECT * FROM weatherdata WHERE Date='"+searchDate+"' and ArduinoID="+ArduinoID,"Humidity");
+        ArrayList<String> date=MySQL.select("SELECT * FROM weatherdata WHERE Date='"+searchDate+"' and ArduinoID="+ArduinoID,"Date");
+        ArrayList<String> time=MySQL.select("SELECT * FROM weatherdata WHERE Date='"+searchDate+"' and ArduinoID="+ArduinoID,"Time");
+        ArrayList<String> temp=MySQL.select("SELECT * FROM weatherdata WHERE Date='"+searchDate+"' and ArduinoID="+ArduinoID,"Temperature");
+        ArrayList<String> humidity=MySQL.select("SELECT * FROM weatherdata WHERE Date='"+searchDate+"' and ArduinoID="+ArduinoID,"Humidity");
+        ArrayList<String> ArduinoId=MySQL.select("SELECT * FROM weatherdata WHERE Date='"+searchDate+"' and ArduinoID="+ArduinoID,"ArduinoID");
         if (date.size()>0) {
             Gson gson = new Gson();
             ArrayList<WeatherData> arraydata = new ArrayList<>();
             for (int i = 0; i < date.size(); i++) {
-                arraydata.add(new WeatherData((String) temp.get(i), (String) humidity.get(i), (String) date.get(i),(String) time.get(i),ArduinoId.get(i)));
+                    arraydata.add(new WeatherData(temp.get(i), humidity.get(i), date.get(i), time.get(i), ArduinoId.get(i)));
             }
             String sendData = gson.toJson(arraydata);
             MySQL.close();
