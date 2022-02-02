@@ -3,9 +3,10 @@ package ownClass;
 import Database.Statements;
 import com.google.gson.Gson;
 
+
 public class ArduinoGet extends Arduino {
     int APin =0;
-    int Value=0;
+    public int Value=0;
 
     public ArduinoGet(int ID, int APin) {
         super(ID);
@@ -17,6 +18,12 @@ public class ArduinoGet extends Arduino {
         this.Value=Value;
     }
 
+    /**
+     * beschreibung von methode
+     * @param setval
+     * @param setting
+     * @return
+     */
     public static String Get(String setval,Arduino setting){
         SocketClient ardunio=new SocketClient(setting.ipAdd,setting.Port);
         String temp =ardunio.sendData(setval);

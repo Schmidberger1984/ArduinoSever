@@ -12,7 +12,7 @@ public class Arduino {
     public String ipAdd="";
     public  int Port=0;
     public boolean online=false;
-    public ArrayList<Arduino> ArduinoList;
+    public static ArrayList<Arduino> data;
 
     public Arduino(int ID) {
         this.ID = ID;
@@ -28,15 +28,14 @@ public class Arduino {
 
     public static ArrayList<Arduino> checkArduino() {
         Statements sql= new Statements();
-        ArrayList<Arduino> data=sql.getArdunioList();
+        data=sql.getArdunioList();
         Iterator<Arduino> iter=data.listIterator();
         try {
-           Arduino current=  iter.next();
             while (iter.hasNext()) {
+                Arduino current=  iter.next();
                 InetAddress inet = InetAddress.getByName(current.ipAdd);
                 if (inet.isReachable(500)) current.online = true;
-                else System.out.println("ofline");
-                current=iter.next();
+
             }
         } catch (IOException e) {
             return null;
