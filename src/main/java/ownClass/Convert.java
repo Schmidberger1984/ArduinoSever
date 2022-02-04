@@ -16,7 +16,7 @@ public class Convert {
     public double toGrad() {
         try {
             double calculate;
-            calculate = data * (5.0 / 4096.0);  //voltage from the seonsor  --- 5V ref and 10 Bit AD-Converter
+            calculate = (data-815) * (5.0 / 4096.0);  //voltage from the seonsor  --- 5V ref and 10 Bit AD-Converter
             calculate = calculate / ((5 - calculate) / 1000);  // calculate the Resistance of the Sensor --- Pullupresistor with 1k
             int posRes;
             for (posRes = 0; posRes < resistance.length; posRes++) {

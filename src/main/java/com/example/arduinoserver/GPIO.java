@@ -58,7 +58,7 @@ public class GPIO extends HttpServlet {
                     if (ArduinoSet.isJson(getval[0])) {
                         for (int i=0;i<onlineList.size();i++) {
                             if (onlineList.get(i).ID == postobj.ID && onlineList.get(i).online == true) {
-                                out.println(ArduinoGet.Get(getval[0], onlineList.get(i)));
+                                out.println(ArduinoGet.getValue(getval[0], onlineList.get(i)));
                             }
                         }
                     }else {

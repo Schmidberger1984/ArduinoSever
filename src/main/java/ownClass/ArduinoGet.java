@@ -24,7 +24,7 @@ public class ArduinoGet extends Arduino {
      * @param setting
      * @return
      */
-    public static String Get(String setval,Arduino setting){
+    public static String getValue(String setval,Arduino setting){
         SocketClient ardunio=new SocketClient(setting.ipAdd,setting.Port);
         String temp =ardunio.sendData(setval);
         Gson gson=new Gson();

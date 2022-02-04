@@ -12,7 +12,9 @@ const char* password =  "sw5610op";
 WiFiServer wifiServer(5000);
  
 void setup() {
-  pinMode(2,OUTPUT);
+  pinMode(14,OUTPUT);
+  pinMode(16,OUTPUT);
+  pinMode(25,OUTPUT);
   Serial.begin(115200);
   delay(1000);
   WiFi.begin(ssid, password);
@@ -26,14 +28,13 @@ void setup() {
 }
  
 void loop() {
- 
   WiFiClient client = wifiServer.available();
   if (client) {
     while (client.connected()) {
       while (client.available()>0) {
         char c = client.read();
          json[count]=c;
-         if (c=='}'){
+         if (c=='}'){ 
                       JSONVar myObject = JSON.parse(json);
                       if (myObject.hasOwnProperty("Pin")){
                         int pin=(int) myObject["Pin"];
@@ -48,7 +49,10 @@ void loop() {
                       if (myObject.hasOwnProperty("APin")){
                         int ID=(int) myObject["ID"];
                         int APin=(int) myObject["APin"];
-                        int value=analogRead((int) myObject["APin"]);
+                        int value=0;
+                        for (int i=0;i<4;i++){
+                            value=analogRead(APin);
+                        }
                         Serial.println("{\"ID\":"+String(ID)+",\"APin\":"+String(APin)+"}");
                         String test="{\"ID\":"+String(ID)+",\"APin\":"+String(APin)+",\"Value\":"+String(value)+"}";
                         size=test.length();
@@ -56,7 +60,8 @@ void loop() {
                         for (int i=0;i<size;i++){
                                   Serial.print(data[i]);
                                   client.write(data[i]);
-                              }
+                              
+                          }
                       }
               client.stop();
              break; 
