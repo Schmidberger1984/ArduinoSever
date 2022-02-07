@@ -1,11 +1,12 @@
 package ownClass;
 
 
+import Database.Statements;
 
 public class Test {
     public static void main(String[] args) {
-        Convert test = new Convert(2827);
-        System.out.println(test.toGrad());
+        Statements statement = new Statements();
+        System.out.println(statement.insertWeatherData(25.4456,40.33356,1));
     }
 }
 

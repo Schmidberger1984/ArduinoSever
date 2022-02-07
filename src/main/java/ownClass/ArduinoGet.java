@@ -19,11 +19,12 @@ public class ArduinoGet extends Arduino {
     }
 
     /**
-     * beschreibung von methode
-     * @param setval
-     * @param setting
-     * @return
+     * get the values from the arduino and convert the raw date in temperature and humidity
+     * @param setval transmit data to the arduino
+     * @param setting object with ip-address and port
+     * @return recived data from the arduino
      */
+
     public static String getValue(String setval,Arduino setting){
         SocketClient ardunio=new SocketClient(setting.ipAdd,setting.Port);
         String temp =ardunio.sendData(setval);
@@ -37,6 +38,6 @@ public class ArduinoGet extends Arduino {
             System.out.println(e);
         }
         if (!setval.contains(temp.substring(0,setval.length()-1))) return "Ardunio has not Json received";
-        return "Ardunio has Json received";
+        return "temperature: "+convert.toGrad()+"° humidity: "+convert.toHumidity()+"%";
     }
 }

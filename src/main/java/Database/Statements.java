@@ -3,11 +3,21 @@ package Database;
 import com.google.gson.Gson;
 import ownClass.Arduino;
 import ownClass.WeatherData;
+
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 
 public class Statements {
+
+    /***
+     * open a connection to database,
+     * read the last line of the weatherdata from database out,
+     * close the connection
+     * @param ArduinoId selected Arduino
+     * @return WeatherData in a json-format
+     */
 
     public String getcurrentWeather(String ArduinoId) {
         MySQL.connect();
@@ -24,9 +34,19 @@ public class Statements {
         return sendData;
     }
 
+
     private String LastEntry(ArrayList data){
         return (String) data.get(data.size()-1);
     }
+
+    /***
+     * open a connection to database,
+     * reads the weatherdata from the choosen date out,
+     * close the connection
+     * @param inputdate search date
+     * @param ArduinoID selected Arduino
+     * @return Arraylist from type WeatherData in json-format
+     */
 
     public String getDayWeather(String inputdate,int ArduinoID){
         LocalDate searchDate= LocalDate.now();
@@ -53,10 +73,36 @@ public class Statements {
         }return "No data found";
     }
 
+    /***
+     * open a connection to database,
+     * write the data to the database,
+     * close the connection
+     * @param temperature
+     * @param humidity
+     * @param ArduinoId
+     * @return error-code
+     */
+
     public int insertWeatherData(double temperature, double humidity, int ArduinoId){
         MySQL.connect();
-        return MySQL.insert("INSERT INTO weatherdata (Temperature, Humidity,ArduinoID) VALUES ('"+temperature+"','"+humidity+"','"+ArduinoId+"')");
+        int error=MySQL.insert("INSERT INTO weatherdata (Temperature, Humidity,ArduinoID) VALUES ('"+trimmedValue(temperature)+"','"+trimmedValue(humidity)+"','"+ArduinoId+"')");
+        MySQL.close();
+        return error;
     }
+
+    private String trimmedValue(double data){
+        DecimalFormat trimmed = new DecimalFormat("#.##");
+        String text=String.valueOf(trimmed.format(data));
+        text=text.replace(",",".");
+        return text;
+    }
+
+    /***
+     * open a connection to database,
+     * read a list of Arduinos out with settings for the connection
+     * close the connection
+     * @return list of all Arduino's
+     */
 
     public ArrayList<Arduino> getArdunioList(){
         MySQL.connect();
@@ -70,5 +116,6 @@ public class Statements {
         MySQL.close();
         return data;
     }
+
 
 }

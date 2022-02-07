@@ -13,10 +13,15 @@ public class Convert {
         this.data = data;
     }
 
+    /***
+     * convert raw data (bit value) to temperature
+     * @return temperature value
+     */
+
     public double toGrad() {
         try {
             double calculate;
-            calculate = (data-815) * (5.0 / 4096.0);  //voltage from the seonsor  --- 5V ref and 10 Bit AD-Converter
+            calculate = (data-830) * (5.0 / 4096.0);  //voltage from the seonsor  --- 5V ref and 10 Bit AD-Converter
             calculate = calculate / ((5 - calculate) / 1000);  // calculate the Resistance of the Sensor --- Pullupresistor with 1k
             int posRes;
             for (posRes = 0; posRes < resistance.length; posRes++) {
@@ -35,9 +40,15 @@ public class Convert {
             return -99999.0;
         }
     }
+
+    /**
+     * generate a random humidity
+     * @return humidity value
+     */
+
     public double toHumidity() {
         Random rand=new Random();
-        int temp=rand.nextInt(50);
-        return temp+20;
+        double temp = rand.nextDouble(20.0);
+        return temp+30;
     }
 }

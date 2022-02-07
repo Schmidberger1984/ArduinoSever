@@ -39,8 +39,8 @@ public class GPIO extends HttpServlet {
                     String[] setval= values.getValue();
                     //out.println(setval[0]);
                     if (ArduinoSet.isJson(setval[0])) {
-                        Gson gson2= new Gson();
-                        Arduino postobj=gson2.fromJson(setval[0], Arduino.class);
+                        Gson gson= new Gson();
+                        Arduino postobj=gson.fromJson(setval[0], Arduino.class);
                         for (int i=0;i<onlineList.size();i++){
                             if (onlineList.get(i).ID==postobj.ID && onlineList.get(i).online==true){
                                 out.println(ArduinoSet.send(setval[0],onlineList.get(i)));
@@ -54,10 +54,10 @@ public class GPIO extends HttpServlet {
                 case "Read":
                     String[] getval= values.getValue();
                     Gson gson2= new Gson();
-                    Arduino postobj=gson2.fromJson(getval[0], Arduino.class);
+                    Arduino postobj2=gson2.fromJson(getval[0], Arduino.class);
                     if (ArduinoSet.isJson(getval[0])) {
                         for (int i=0;i<onlineList.size();i++) {
-                            if (onlineList.get(i).ID == postobj.ID && onlineList.get(i).online == true) {
+                            if (onlineList.get(i).ID == postobj2.ID && onlineList.get(i).online == true) {
                                 out.println(ArduinoGet.getValue(getval[0], onlineList.get(i)));
                             }
                         }
@@ -68,9 +68,23 @@ public class GPIO extends HttpServlet {
                 case "Status":
                     out.println(onlineJson);
                     break;
+
+                case "TestGPIO":
+                    String[] testval= values.getValue();
+                        for (int i=0;i<onlineList.size();i++) {
+                            if (onlineList.get(i).ID == Integer.valueOf(testval[0]) && onlineList.get(i).online == true) {
+                                out.println("Start GPIO-Test");
+                                ArduinoSet.testGPIO(onlineList.get(i));
+                            }
+                        }
+                    out.println("Finished GPIO-Test");
+                    break;
+
             }
         }
     }
+
+
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
