@@ -1,5 +1,6 @@
 package com.example.arduinoserver;
 
+import Database.Statements;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -26,8 +27,11 @@ public class RecordDataStart extends HttpServlet {
                     for (int i = 0; i< Arduino.data.size(); i++) {
                         String[] setval= values.getValue();
                         if (Arduino.data.get(i).online && Arduino.data.get(i).ID==Integer.parseInt(setval[0])){
+                            Statements statement= new Statements();
                             out.println("Recording data");
                             ThreadService.setdata(Arduino.data.get(i));
+                            ThreadService.settrigger(statement.getTrigger(setval[0]));
+                            ThreadService.setpinout(statement.getPinout());
                             ThreadService.startrecord();
                         }
                     }

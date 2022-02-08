@@ -17,6 +17,12 @@ public class SocketClient {
         Port = port;
     }
 
+    /***
+     *open a socketconnection to the arduino and exchange data with the arduino
+     * @param data send data to arduino
+     * @return recived data from arduino
+     */
+
     public String sendData(String data){
         try {
             String intext="";

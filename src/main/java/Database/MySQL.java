@@ -8,6 +8,9 @@ public class MySQL {
     static ResultSet rs=null;
     static Statement statement=null;
 
+    /***
+     open a connection to the mysql-server
+     */
     public static void connect(){
         try {
             String dbURL = "jdbc:mysql://localhost:3306/weather";
@@ -21,6 +24,14 @@ public class MySQL {
             System.out.println(e);
         }
     }
+
+    /***
+     *to execute a select statement on the database
+     *
+     * @param cmd  sql-statemanet
+     * @param cell selected column
+     * @return a Arraylist with the results
+     */
     public static ArrayList select(String cmd, String cell){
         ArrayList data=new ArrayList();
         try {
@@ -35,6 +46,13 @@ public class MySQL {
         }
         return null;
     }
+
+    /***
+     * to execute a insert statement on the database
+     * @param cmd sql-statemanet
+     * @return error-Code
+     */
+
     public static int insert(String cmd){
         try {
             Statement statement = connection.createStatement();
@@ -45,6 +63,9 @@ public class MySQL {
         return 0;
     }
 
+    /***
+     * close the connection to the database
+     */
 
     public static void close(){
         if (rs!=null){

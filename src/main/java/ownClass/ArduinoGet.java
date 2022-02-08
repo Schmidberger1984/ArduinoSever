@@ -29,8 +29,8 @@ public class ArduinoGet extends Arduino {
         SocketClient ardunio=new SocketClient(setting.ipAdd,setting.Port);
         String temp =ardunio.sendData(setval);
         Gson gson=new Gson();
-        ArduinoGet data=gson.fromJson(temp,ArduinoGet.class);
-        Convert convert = new Convert( data.Value);
+        ArduinoGet datatemp=gson.fromJson(temp,ArduinoGet.class);
+        Convert convert = new Convert( datatemp.Value);
         Statements statement= new Statements();
         try {
             statement.insertWeatherData(convert.toGrad(), convert.toHumidity(), setting.ID);

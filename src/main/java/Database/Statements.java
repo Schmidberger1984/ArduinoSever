@@ -2,6 +2,8 @@ package Database;
 
 import com.google.gson.Gson;
 import ownClass.Arduino;
+import ownClass.Pinout;
+import ownClass.TriggerSettings;
 import ownClass.WeatherData;
 
 import java.text.DecimalFormat;
@@ -117,5 +119,32 @@ public class Statements {
         return data;
     }
 
+    public ArrayList<Pinout> getPinout(){
+        ArrayList<Pinout> pinoutList=new ArrayList<>();
+        MySQL.connect();
+        ArrayList<String> type=MySQL.select("SELECT * FROM arduinogpio", "Type");
+        ArrayList<String> pin=MySQL.select("SELECT * FROM arduinogpio", "Pin");
+        ArrayList<String> arduinoID=MySQL.select("SELECT * FROM arduinogpio", "ArduinoID");
+        for (int i=0;i<type.size();i++){
+            pinoutList.add(new Pinout(type.get(i), pin.get(i),arduinoID.get(i)));
+        }
+        MySQL.close();
+        return pinoutList;
+    }
+
+    public static TriggerSettings getTrigger(String ArduinoID){
+
+        MySQL.connect();
+        ArrayList<String> arduinoID=MySQL.select("SELECT * FROM arduinotrigger WHERE ArduinoID='"+ArduinoID+"'", "ArduinoID");
+        ArrayList<String> onTemp=MySQL.select("SELECT * FROM arduinotrigger WHERE ArduinoID='"+ArduinoID+"'", "onTemp");
+        ArrayList<String>  offTemp=MySQL.select("SELECT * FROM arduinotrigger WHERE ArduinoID='"+ArduinoID+"'", "offTemp");
+        ArrayList<String>  onHumid=MySQL.select("SELECT * FROM arduinotrigger WHERE ArduinoID='"+ArduinoID+"'", "onHumid");
+        ArrayList<String>  offHumid=MySQL.select("SELECT * FROM arduinotrigger WHERE ArduinoID='"+ArduinoID+"'", "offHumid");
+        ArrayList<String>  outSide=MySQL.select("SELECT * FROM arduinotrigger WHERE ArduinoID='"+ArduinoID+"'", "outSide");
+        TriggerSettings data=new TriggerSettings(arduinoID.get(0), Double.valueOf(onTemp.get(0)), Double.valueOf(offTemp.get(0)), Double.valueOf(onHumid.get(0)), Double.valueOf(offHumid.get(0)), Boolean.parseBoolean(outSide.get(0)));
+        MySQL.close();
+        return data;
+
+    }
 
 }

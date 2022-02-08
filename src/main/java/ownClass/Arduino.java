@@ -25,6 +25,10 @@ public class Arduino {
         this.Port=Port;
     }
 
+    /***
+     * connection test for the arduino (timeout=500ms)
+      * @return give a list of available arduino's return
+     */
 
     public static ArrayList<Arduino> checkArduino() {
         Statements sql= new Statements();

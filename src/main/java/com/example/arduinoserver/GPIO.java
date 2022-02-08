@@ -1,6 +1,7 @@
 package com.example.arduinoserver;
 
 
+import Database.Statements;
 import com.google.gson.Gson;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -8,6 +9,7 @@ import jakarta.servlet.annotation.*;
 import ownClass.ArduinoGet;
 import ownClass.ArduinoSet;
 import ownClass.Arduino;
+import ownClass.Pinout;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -17,11 +19,15 @@ import java.util.Map;
 @WebServlet(name = "GPIO", value = "/GPIO")
 public class GPIO extends HttpServlet {
     public ArrayList<Arduino> onlineList;
+    public ArrayList<Pinout> pinout;
+
     String onlineJson;
 
     @Override
     public void init() {
         onlineList = Arduino.checkArduino();
+        Statements statement= new Statements();
+        pinout= statement.getPinout();
         Gson gson2= new Gson();
         onlineJson=gson2.toJson(onlineList);
     }
@@ -74,7 +80,7 @@ public class GPIO extends HttpServlet {
                         for (int i=0;i<onlineList.size();i++) {
                             if (onlineList.get(i).ID == Integer.valueOf(testval[0]) && onlineList.get(i).online == true) {
                                 out.println("Start GPIO-Test");
-                                ArduinoSet.testGPIO(onlineList.get(i));
+                                ArduinoSet.testGPIO(onlineList.get(i),pinout,testval[0]);
                             }
                         }
                     out.println("Finished GPIO-Test");

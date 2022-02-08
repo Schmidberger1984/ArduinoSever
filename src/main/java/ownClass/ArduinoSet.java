@@ -2,6 +2,8 @@ package ownClass;
 
 
 import com.google.gson.Gson;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class ArduinoSet extends Arduino {
     int Pin=0;
@@ -48,17 +50,18 @@ public class ArduinoSet extends Arduino {
      * send a command to the arduino to switch on and of the outputs
      * @param setting Arduino settings
      */
-    public static void testGPIO(Arduino setting){
-        String[] GPIO = {"14","16","25"};
+    public static void testGPIO(Arduino setting, ArrayList<Pinout> pinout,String ArduinoID){
+        ArrayList<Pinout> outputList=pinout.stream().filter(e->e.ArduinoID.equals(ArduinoID)).filter(e->e.type.contains("output")).collect(Collectors.toCollection(ArrayList::new));
         SocketClient ardunio=new SocketClient(setting.ipAdd,setting.Port);
-     for(int i=0;i<3;i++){
-         try{
-         String temp =ardunio.sendData("{\"ID\":1,\"Pin\":"+GPIO[i]+",\"setValue\":true}\n");
-         Thread.sleep(1000);
-         temp =ardunio.sendData("{\"ID\":1,\"Pin\":"+GPIO[i]+",\"setValue\":false}\n");
+        for(int i=0;i<3;i++){
+             try{
+             String temp =ardunio.sendData("{\"ID\":1,\"Pin\":"+outputList.get(i).pin+",\"setValue\":true}\n");
+             Thread.sleep(1000);
+             temp =ardunio.sendData("{\"ID\":1,\"Pin\":"+outputList.get(i).pin+",\"setValue\":false}\n");
+             }
+             catch (Exception e) {}
          }
-         catch (Exception e) {}
-     }
     }
+
 
 }
