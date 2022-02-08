@@ -53,7 +53,7 @@ public class ArduinoSet extends Arduino {
     public static void testGPIO(Arduino setting, ArrayList<Pinout> pinout,String ArduinoID){
         ArrayList<Pinout> outputList=pinout.stream().filter(e->e.ArduinoID.equals(ArduinoID)).filter(e->e.type.contains("output")).collect(Collectors.toCollection(ArrayList::new));
         SocketClient ardunio=new SocketClient(setting.ipAdd,setting.Port);
-        for(int i=0;i<3;i++){
+        for(int i=0;i<outputList.size();i++){
              try{
              String temp =ardunio.sendData("{\"ID\":1,\"Pin\":"+outputList.get(i).pin+",\"setValue\":true}\n");
              Thread.sleep(1000);

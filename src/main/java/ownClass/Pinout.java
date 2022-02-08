@@ -10,4 +10,13 @@ public class Pinout {
         this.pin = pin;
         this.ArduinoID = ArduinoID;
     }
+
+    @Override
+    public String toString() {
+        return "Pinout{" +
+                "type='" + type + '\'' +
+                ", pin='" + pin + '\'' +
+                ", ArduinoID='" + ArduinoID + '\'' +
+                '}';
+    }
 }

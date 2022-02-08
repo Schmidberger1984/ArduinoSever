@@ -14,6 +14,7 @@ WiFiServer wifiServer(5000);
 void setup() {
   pinMode(14,OUTPUT);
   pinMode(16,OUTPUT);
+  pinMode(17,OUTPUT);
   pinMode(25,OUTPUT);
   Serial.begin(115200);
   delay(1000);
