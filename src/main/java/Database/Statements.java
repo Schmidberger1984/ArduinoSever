@@ -5,7 +5,6 @@ import ownClass.Arduino;
 import ownClass.Pinout;
 import ownClass.TriggerSettings;
 import ownClass.WeatherData;
-
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -106,7 +105,7 @@ public class Statements {
      * @return list of all Arduino's
      */
 
-    public ArrayList<Arduino> getArdunioList(){
+    public ArrayList<Arduino> getArduinoList(){
         MySQL.connect();
         ArrayList<String> id=MySQL.select("SELECT * FROM arduinolist", "ID");
         ArrayList<String> ipAdd=MySQL.select("SELECT * FROM arduinolist", "ipADD");
@@ -133,7 +132,6 @@ public class Statements {
     }
 
     public static TriggerSettings getTrigger(String ArduinoID){
-
         MySQL.connect();
         ArrayList<String> arduinoID=MySQL.select("SELECT * FROM arduinotrigger WHERE ArduinoID='"+ArduinoID+"'", "ArduinoID");
         ArrayList<String> onTemp=MySQL.select("SELECT * FROM arduinotrigger WHERE ArduinoID='"+ArduinoID+"'", "onTemp");
@@ -141,7 +139,8 @@ public class Statements {
         ArrayList<String>  onHumid=MySQL.select("SELECT * FROM arduinotrigger WHERE ArduinoID='"+ArduinoID+"'", "onHumid");
         ArrayList<String>  offHumid=MySQL.select("SELECT * FROM arduinotrigger WHERE ArduinoID='"+ArduinoID+"'", "offHumid");
         ArrayList<String>  outSide=MySQL.select("SELECT * FROM arduinotrigger WHERE ArduinoID='"+ArduinoID+"'", "outSide");
-        TriggerSettings data=new TriggerSettings(arduinoID.get(0), Double.valueOf(onTemp.get(0)), Double.valueOf(offTemp.get(0)), Double.valueOf(onHumid.get(0)), Double.valueOf(offHumid.get(0)), Boolean.parseBoolean(outSide.get(0)));
+        ArrayList<String>  enable=MySQL.select("SELECT * FROM arduinotrigger WHERE ArduinoID='"+ArduinoID+"'", "enable");
+        TriggerSettings data=new TriggerSettings(arduinoID.get(0), Double.valueOf(onTemp.get(0)), Double.valueOf(offTemp.get(0)), Double.valueOf(onHumid.get(0)), Double.valueOf(offHumid.get(0)), Boolean.parseBoolean(outSide.get(0)),Boolean.parseBoolean(enable.get(0)));
         MySQL.close();
         return data;
 

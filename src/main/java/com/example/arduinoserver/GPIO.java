@@ -48,10 +48,10 @@ public class GPIO extends HttpServlet {
                         Gson gson= new Gson();
                         Arduino postobj=gson.fromJson(setval[0], Arduino.class);
                         for (int i=0;i<onlineList.size();i++){
-                            if (onlineList.get(i).ID==postobj.ID && onlineList.get(i).online==true){
+                            if (onlineList.get(i).ID==postobj.ID && onlineList.get(i).online){
                                 out.println(ArduinoSet.send(setval[0],onlineList.get(i)));
                             }
-                            if (onlineList.get(i).ID==postobj.ID && onlineList.get(i).online==false) out.println("Arduino is offline");
+                            if (onlineList.get(i).ID==postobj.ID && !(onlineList.get(i).online)) out.println("Arduino is offline");
                         }
                     }else {
                         out.println("no Json received");
@@ -63,7 +63,7 @@ public class GPIO extends HttpServlet {
                     Arduino postobj2=gson2.fromJson(getval[0], Arduino.class);
                     if (ArduinoSet.isJson(getval[0])) {
                         for (int i=0;i<onlineList.size();i++) {
-                            if (onlineList.get(i).ID == postobj2.ID && onlineList.get(i).online == true) {
+                            if (onlineList.get(i).ID == postobj2.ID && onlineList.get(i).online) {
                                 out.println(ArduinoGet.getValue(getval[0], onlineList.get(i)));
                             }
                         }
@@ -78,7 +78,7 @@ public class GPIO extends HttpServlet {
                 case "TestGPIO":
                     String[] testval= values.getValue();
                         for (int i=0;i<onlineList.size();i++) {
-                            if (onlineList.get(i).ID == Integer.valueOf(testval[0]) && onlineList.get(i).online == true) {
+                            if (onlineList.get(i).ID == Integer.valueOf(testval[0]) && onlineList.get(i).online) {
                                 out.println("Start GPIO-Test");
                                 ArduinoSet.testGPIO(onlineList.get(i),pinout,testval[0]);
                             }

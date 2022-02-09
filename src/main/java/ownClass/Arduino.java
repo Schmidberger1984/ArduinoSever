@@ -32,7 +32,7 @@ public class Arduino {
 
     public static ArrayList<Arduino> checkArduino() {
         Statements sql= new Statements();
-        data=sql.getArdunioList();
+        data=sql.getArduinoList();
         Iterator<Arduino> iter=data.listIterator();
         try {
             while (iter.hasNext()) {

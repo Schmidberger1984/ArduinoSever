@@ -1,8 +1,6 @@
 package ownClass;
 
 
-import java.util.Random;
-
 public class Convert {
 
     double datatemp;
