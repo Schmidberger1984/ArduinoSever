@@ -60,6 +60,7 @@ public final class ThreadService{
      */
 
     public static void destroying() {
+        INSTANCE=null;
         executorService.shutdown();
     }
 

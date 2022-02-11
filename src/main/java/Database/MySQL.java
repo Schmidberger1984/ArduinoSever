@@ -16,7 +16,6 @@ public class MySQL {
     public static void connect(){
         ReadConfig config=new ReadConfig();
         System.out.println(config.isNotFound());
-        if (!config.isNotFound()) {
         try {
             String dbURL = config.getUrl();
             String username = config.getUser();
@@ -28,7 +27,6 @@ public class MySQL {
         } catch (Exception e) {
             System.out.println(e);
         }
-    }
     }
 
     /***
