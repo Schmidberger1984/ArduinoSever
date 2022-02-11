@@ -45,7 +45,7 @@ public class Convert {
     }
 
     /**
-     * generate a random humidity
+     * generate from adc-value a percent value
      * @return humidity value
      */
 

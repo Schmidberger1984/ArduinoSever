@@ -21,7 +21,8 @@ public final class ThreadService{
     }
 
     /***
-     * start a thread and every 2 second a read command is send to the arduino
+     * start a thread and every 2 second a read command is sent to the arduino
+     * after receiving data and converting the raw data
      */
 
     public static void startrecord () {
@@ -77,6 +78,11 @@ public final class ThreadService{
     public static void settrigger(TriggerSettings data){
         triggerSettings=data;
     }
+
+    /**
+     * fetch the current values and stored them in a local variable
+     * @param data current data
+     */
 
     public static void setpinout(ArrayList<Pinout> data){
         pinoutList=data;

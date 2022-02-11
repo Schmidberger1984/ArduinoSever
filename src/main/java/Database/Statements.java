@@ -14,7 +14,7 @@ public class Statements {
 
     /***
      * open a connection to database,
-     * read the last line of the weatherdata from database out,
+     * reads the last line of the weatherdata from database out,
      * close the connection
      * @param ArduinoId selected Arduino
      * @return WeatherData in a json-format
@@ -100,7 +100,7 @@ public class Statements {
 
     /***
      * open a connection to database,
-     * read a list of Arduinos out with settings for the connection
+     * reads a list of Arduinos out with settings for the connection
      * close the connection
      * @return list of all Arduino's
      */
@@ -118,6 +118,13 @@ public class Statements {
         return data;
     }
 
+    /**
+     * open a connection to database,
+     * reads a list of pinouts out,
+     * close the connection
+     * @return list of all pinouts
+     */
+
     public ArrayList<Pinout> getPinout(){
         ArrayList<Pinout> pinoutList=new ArrayList<>();
         MySQL.connect();
@@ -130,6 +137,14 @@ public class Statements {
         MySQL.close();
         return pinoutList;
     }
+
+    /**
+     * open a connection to database,
+     * reads a list of triggers out,
+     * close the connection
+     * @param ArduinoID
+     * @return
+     */
 
     public static TriggerSettings getTrigger(String ArduinoID){
         MySQL.connect();

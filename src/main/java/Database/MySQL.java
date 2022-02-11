@@ -1,5 +1,7 @@
 package Database;
 
+import ownClass.ReadConfig;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -12,10 +14,13 @@ public class MySQL {
      open a connection to the mysql-server
      */
     public static void connect(){
+        ReadConfig config=new ReadConfig();
+        System.out.println(config.isNotFound());
+        if (!config.isNotFound()) {
         try {
-            String dbURL = "jdbc:mysql://localhost:3306/weather";
-            String username = "root";
-            String password = "";
+            String dbURL = config.getUrl();
+            String username = config.getUser();
+            String password = config.getPassword();
             // load and register JDBC driver for MySQL
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(dbURL, username, password);
@@ -23,6 +28,7 @@ public class MySQL {
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
     }
 
     /***
