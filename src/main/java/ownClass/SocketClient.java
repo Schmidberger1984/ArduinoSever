@@ -10,7 +10,7 @@ import java.net.SocketAddress;
 
 public class SocketClient {
     String ipAddress;
-    int Port=0;
+    int Port;
 
     public SocketClient(String ipAddress, int port) {
         this.ipAddress = ipAddress;

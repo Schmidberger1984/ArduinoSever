@@ -5,6 +5,8 @@ import ownClass.Arduino;
 import ownClass.Pinout;
 import ownClass.TriggerSettings;
 import ownClass.WeatherData;
+
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -20,7 +22,7 @@ public class Statements {
      * @return WeatherData in a json-format
      */
 
-    public String getcurrentWeather(String ArduinoId) {
+    public String getcurrentWeather(String ArduinoId) throws IOException {
         MySQL.connect();
         ArrayList date=MySQL.select("SELECT * FROM weatherdata WHERE arduinoID="+ArduinoId,"Date");
         ArrayList time=MySQL.select("SELECT * FROM weatherdata WHERE arduinoID="+ArduinoId,"Time");
@@ -49,7 +51,7 @@ public class Statements {
      * @return Arraylist from type WeatherData in json-format
      */
 
-    public String getDayWeather(String inputdate,int ArduinoID){
+    public String getDayWeather(String inputdate,int ArduinoID) throws IOException {
         LocalDate searchDate= LocalDate.now();
         try {
             if (inputdate != null) searchDate = LocalDate.parse(inputdate);
@@ -84,8 +86,8 @@ public class Statements {
      * @return error-code
      */
 
-    public int insertWeatherData(double temperature, double humidity, int ArduinoId){
-        MySQL.connect();
+    public int insertWeatherData(double temperature, double humidity, int ArduinoId)  {
+        MySQL.connct();
         int error=MySQL.insert("INSERT INTO weatherdata (Temperature, Humidity,ArduinoID) VALUES ('"+trimmedValue(temperature)+"','"+trimmedValue(humidity)+"','"+ArduinoId+"')");
         MySQL.close();
         return error;
@@ -105,7 +107,7 @@ public class Statements {
      * @return list of all Arduino's
      */
 
-    public ArrayList<Arduino> getArduinoList(){
+    public ArrayList<Arduino> getArduinoList() throws IOException {
         MySQL.connect();
         ArrayList<String> id=MySQL.select("SELECT * FROM arduinolist", "ID");
         ArrayList<String> ipAdd=MySQL.select("SELECT * FROM arduinolist", "ipADD");
@@ -125,7 +127,7 @@ public class Statements {
      * @return list of all pinouts
      */
 
-    public ArrayList<Pinout> getPinout(){
+    public ArrayList<Pinout> getPinout() throws IOException {
         ArrayList<Pinout> pinoutList=new ArrayList<>();
         MySQL.connect();
         ArrayList<String> type=MySQL.select("SELECT * FROM arduinogpio", "Type");
@@ -146,7 +148,7 @@ public class Statements {
      * @return
      */
 
-    public static TriggerSettings getTrigger(String ArduinoID){
+    public static TriggerSettings getTrigger(String ArduinoID) throws IOException {
         MySQL.connect();
         ArrayList<String> arduinoID=MySQL.select("SELECT * FROM arduinotrigger WHERE ArduinoID='"+ArduinoID+"'", "ArduinoID");
         ArrayList<String> onTemp=MySQL.select("SELECT * FROM arduinotrigger WHERE ArduinoID='"+ArduinoID+"'", "onTemp");

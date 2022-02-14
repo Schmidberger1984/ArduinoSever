@@ -2,18 +2,20 @@ package Database;
 
 import ownClass.ReadConfig;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 
 public class MySQL {
-    static Connection connection;
-    static ResultSet rs=null;
-    static Statement statement=null;
+    private static Connection connection;
+    private static ResultSet rs=null;
+    private static Statement statement=null;
+
 
     /***
      open a connection to the mysql-server
      */
-    public static void connect(){
+    public static void connect()  {
         ReadConfig config=new ReadConfig();
         System.out.println(config.isNotFound());
         try {
@@ -28,7 +30,6 @@ public class MySQL {
             System.out.println(e);
         }
     }
-
     /***
      *to execute a select statement on the database
      *
@@ -46,7 +47,7 @@ public class MySQL {
             }
             return data;
         } catch (Exception e) {
-
+            System.out.println(e);
         }
         return null;
     }
@@ -75,13 +76,18 @@ public class MySQL {
         if (rs!=null){
             try{
                 rs.close();
-            }catch (SQLException e) {}
+            }catch (SQLException e) {
+                System.out.println(e);
+            }
         }
 
         if (connection!=null) {
             try {
                 connection.close();
-            }catch (SQLException e) {}
+            }catch (SQLException e) {
+                System.out.println(e);
+            }
         }
     }
+
 }

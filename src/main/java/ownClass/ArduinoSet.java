@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class ArduinoSet extends Arduino {
-    int Pin=0;
-    boolean setValue=false;
+    int Pin;
+    boolean setValue;
 
 
     public ArduinoSet(int ID,int Pin, boolean setValue) {

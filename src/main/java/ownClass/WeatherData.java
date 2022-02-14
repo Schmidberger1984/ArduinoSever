@@ -12,8 +12,7 @@ public class WeatherData {
         this.humidity = humidity;
         this.date = date;
         this.time = time;
-        this.ID =Integer.valueOf(ID);;
-        ;
+        this.ID =Integer.valueOf(ID);
     }
 
 }

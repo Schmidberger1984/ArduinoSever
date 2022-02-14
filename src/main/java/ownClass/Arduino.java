@@ -30,7 +30,7 @@ public class Arduino {
       * @return give a list of available arduino's return
      */
 
-    public static ArrayList<Arduino> checkArduino() {
+    public static ArrayList<Arduino> checkArduino() throws IOException {
         Statements sql= new Statements();
         data=sql.getArduinoList();
         Iterator<Arduino> iter=data.listIterator();

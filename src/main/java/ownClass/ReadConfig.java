@@ -1,7 +1,10 @@
 package ownClass;
 
+import org.ini4j.Wini;
+
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class ReadConfig {
@@ -10,8 +13,8 @@ public class ReadConfig {
     private String password;
     private boolean notFound =false;
 
-    public ReadConfig() {
-        read();
+    public ReadConfig(){
+        readIni();
     }
 
     private void read() {
@@ -34,6 +37,19 @@ public class ReadConfig {
         int end=data.length();
         if ((pos+1)==end) return "";
         return data.substring(pos+1,end);
+    }
+
+
+    private void readIni()  {
+        Wini ini = null;
+        try {
+            ini = new Wini(new File("C:\\Software_Projekt\\ArduinoSever\\src\\main\\resources\\Setting2.ini"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        url=ini.get("MySQL","url",String.class);
+        user=ini.get("MySQL","user",String.class);
+        password=ini.get("MySQL","password",String.class);
     }
 
     public String getUrl() {

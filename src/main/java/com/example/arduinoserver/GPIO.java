@@ -25,11 +25,16 @@ public class GPIO extends HttpServlet {
 
     @Override
     public void init() {
-        onlineList = Arduino.checkArduino();
+        try {
+            onlineList = Arduino.checkArduino();
+
         Statements statement= new Statements();
         pinout= statement.getPinout();
         Gson gson2= new Gson();
         onlineJson=gson2.toJson(onlineList);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
