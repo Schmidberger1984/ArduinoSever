@@ -34,7 +34,7 @@ public final class ThreadService{
         Optional<Pinout> pintemp = pinoutList.stream().filter(e -> e.ArduinoID.equals(String.valueOf(setting.ID))).filter(e -> e.type.equals("temperature")).findFirst();
         Optional<Pinout> pinhumidity = pinoutList.stream().filter(e -> e.ArduinoID.equals(String.valueOf(setting.ID))).filter(e -> e.type.equals("humidity")).findFirst();
         Optional<Pinout> out = pinoutList.stream().filter(e -> e.ArduinoID.equals(String.valueOf(setting.ID))).filter(e -> e.type.equals("output1")).findFirst();
-        if (out!=null || pinhumidity!=null || pintemp!=null) {                      //check if they found all
+        if (out!=null || pinhumidity!=null || pintemp!=null) {
             SocketClient ardunio = new SocketClient(setting.ipAdd, setting.Port);
             String temp = ardunio.sendData("{\"ID\":" + setting.ID + ",\"APin\":" + pintemp.get().pin + "}");
             Gson gson = new Gson();

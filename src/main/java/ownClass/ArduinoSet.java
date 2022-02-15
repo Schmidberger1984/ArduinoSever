@@ -3,6 +3,7 @@ package ownClass;
 
 import com.google.gson.Gson;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 public class ArduinoSet extends Arduino {
@@ -52,16 +53,30 @@ public class ArduinoSet extends Arduino {
      */
     public static void testGPIO(Arduino setting, ArrayList<Pinout> pinout,String ArduinoID){
         ArrayList<Pinout> outputList=pinout.stream().filter(e->e.ArduinoID.equals(ArduinoID)).filter(e->e.type.contains("output")).collect(Collectors.toCollection(ArrayList::new));
-        SocketClient ardunio=new SocketClient(setting.ipAdd,setting.Port);
         for(int i=0;i<outputList.size();i++){
-             try{
-             String temp =ardunio.sendData("{\"ID\":1,\"Pin\":"+outputList.get(i).pin+",\"setValue\":true}\n");
-             Thread.sleep(1000);
-             temp =ardunio.sendData("{\"ID\":1,\"Pin\":"+outputList.get(i).pin+",\"setValue\":false}\n");
-             }
-             catch (Exception e) {}
+            setGPIO(setting,ArduinoID,outputList.get(i).pin,300);
          }
     }
+
+    private static void setGPIO(Arduino setting, String ArduinoID,String pin,int timeout){
+        SocketClient ardunio=new SocketClient(setting.ipAdd,setting.Port);
+        try{
+            String temp =ardunio.sendData("{\"ID\":"+ArduinoID+",\"Pin\":"+pin+",\"setValue\":true}\n");
+            Thread.sleep(timeout);
+            temp =ardunio.sendData("{\"ID\":"+ArduinoID+",\"Pin\":"+pin+",\"setValue\":false}\n");
+        }
+        catch (Exception e) {}
+    }
+
+    public static void randomSet(Arduino setting, ArrayList<Pinout> pinout,String ArduinoID){
+        ArrayList<Pinout> outputList=pinout.stream().filter(e->e.ArduinoID.equals(ArduinoID)).filter(e->e.type.contains("output")).collect(Collectors.toCollection(ArrayList::new));
+        Random random = new Random();
+        for(int i=0;i<10;i++){
+            int temp = random.nextInt(4);
+            setGPIO(setting,ArduinoID,outputList.get(temp).pin,70);
+        }
+    }
+
 
 
 }

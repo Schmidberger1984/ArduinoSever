@@ -87,7 +87,7 @@ public class Statements {
      */
 
     public int insertWeatherData(double temperature, double humidity, int ArduinoId)  {
-        MySQL.connct();
+        MySQL.connect();
         int error=MySQL.insert("INSERT INTO weatherdata (Temperature, Humidity,ArduinoID) VALUES ('"+trimmedValue(temperature)+"','"+trimmedValue(humidity)+"','"+ArduinoId+"')");
         MySQL.close();
         return error;

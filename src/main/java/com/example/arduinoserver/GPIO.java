@@ -20,18 +20,17 @@ import java.util.Map;
 public class GPIO extends HttpServlet {
     public ArrayList<Arduino> onlineList;
     public ArrayList<Pinout> pinout;
-
     String onlineJson;
+
 
     @Override
     public void init() {
         try {
             onlineList = Arduino.checkArduino();
-
-        Statements statement= new Statements();
-        pinout= statement.getPinout();
-        Gson gson2= new Gson();
-        onlineJson=gson2.toJson(onlineList);
+            Statements statement= new Statements();
+            pinout= statement.getPinout();
+            Gson gson2= new Gson();
+            onlineJson=gson2.toJson(onlineList);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -88,6 +87,16 @@ public class GPIO extends HttpServlet {
                                 ArduinoSet.testGPIO(onlineList.get(i),pinout,testval[0]);
                             }
                         }
+                    out.println("Finished GPIO-Test");
+                    break;
+                case "randomGPIO":
+                    String[] randomval= values.getValue();
+                    for (int i=0;i<onlineList.size();i++) {
+                        if (onlineList.get(i).ID == Integer.valueOf(randomval[0]) && onlineList.get(i).online) {
+                            out.println("Start GPIO-Test");
+                            ArduinoSet.randomSet(onlineList.get(i),pinout,randomval[0]);
+                        }
+                    }
                     out.println("Finished GPIO-Test");
                     break;
 
