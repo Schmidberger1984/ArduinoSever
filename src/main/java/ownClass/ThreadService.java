@@ -33,8 +33,9 @@ public final class ThreadService{
 
         Optional<Pinout> pintemp = pinoutList.stream().filter(e -> e.ArduinoID.equals(String.valueOf(setting.ID))).filter(e -> e.type.equals("temperature")).findFirst();
         Optional<Pinout> pinhumidity = pinoutList.stream().filter(e -> e.ArduinoID.equals(String.valueOf(setting.ID))).filter(e -> e.type.equals("humidity")).findFirst();
-        Optional<Pinout> out = pinoutList.stream().filter(e -> e.ArduinoID.equals(String.valueOf(setting.ID))).filter(e -> e.type.equals("output1")).findFirst();
-        if (out!=null || pinhumidity!=null || pintemp!=null) {
+        Optional<Pinout> pinout = pinoutList.stream().filter(e -> e.ArduinoID.equals(String.valueOf(setting.ID))).filter(e -> e.type.equals("output1")).findFirst();
+
+        if(pintemp.isPresent() && pinhumidity.isPresent() && pinout.isPresent() ){
             SocketClient ardunio = new SocketClient(setting.ipAdd, setting.Port);
             String temp = ardunio.sendData("{\"ID\":" + setting.ID + ",\"APin\":" + pintemp.get().pin + "}");
             Gson gson = new Gson();
@@ -47,13 +48,13 @@ public final class ThreadService{
             if (triggerSettings.enable) {
                 if (triggerSettings.outside) {
                     if (convert.toGrad() > triggerSettings.onTemp || convert.toHumidity() > triggerSettings.onHumid)
-                        ardunio.sendData("{\"ID\":\"+setting.ID+\",\"Pin\":" + out.get().pin + ",\"setValue\":true}");
+                        ardunio.sendData("{\"ID\":\"+setting.ID+\",\"Pin\":" + pinout.get().pin + ",\"setValue\":true}");
                     else if (convert.toGrad() < triggerSettings.offTemp || convert.toHumidity() < triggerSettings.offHumid)
-                        ardunio.sendData("{\"ID\":\"+setting.ID+\",\"Pin\":" + out.get().pin + ",\"setValue\":false}");
+                        ardunio.sendData("{\"ID\":\"+setting.ID+\",\"Pin\":" + pinout.get().pin + ",\"setValue\":false}");
                 } else {
                     if ((convert.toGrad() < triggerSettings.onTemp && convert.toGrad() > triggerSettings.offTemp) || (convert.toHumidity() < triggerSettings.onHumid && convert.toHumidity() > triggerSettings.offHumid))
-                        ardunio.sendData("{\"ID\":\"+setting.ID+\",\"Pin\":" + out.get().pin + ",\"setValue\":true}");
-                    else ardunio.sendData("{\"ID\":\"+setting.ID+\",\"Pin\":" + out.get().pin + ",\"setValue\":false}");
+                        ardunio.sendData("{\"ID\":\"+setting.ID+\",\"Pin\":" + pinout.get().pin + ",\"setValue\":true}");
+                    else ardunio.sendData("{\"ID\":\"+setting.ID+\",\"Pin\":" + pinout.get().pin + ",\"setValue\":false}");
                 }
             }
         }

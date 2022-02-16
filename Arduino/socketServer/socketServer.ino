@@ -5,13 +5,13 @@ char json[40];
 char data[40];
 int count=0;
 int size=0;
-/*
+
 const char* ssid = "PBS-EE5C60";
 const char* password =  "sw5610op";
-*/
+/*
 const char* ssid = "Intern.Coders.Bay";
 const char* password =  "1n73rn2020";
- 
+ */
 WiFiServer wifiServer(5000);
  
 void setup() {

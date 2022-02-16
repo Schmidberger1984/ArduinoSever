@@ -47,7 +47,6 @@ public class GPIO extends HttpServlet {
             switch (values.getKey()){
                 case "Set":
                     String[] setval= values.getValue();
-                    //out.println(setval[0]);
                     if (ArduinoSet.isJson(setval[0])) {
                         Gson gson= new Gson();
                         Arduino postobj=gson.fromJson(setval[0], Arduino.class);
